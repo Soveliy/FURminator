@@ -1,0 +1,13 @@
+
+
+
+input.error, textarea.error{border:1px solid #f00}
+
+label.error{
+	font-size:12px;
+	font-style:italic;
+	color:#f00;
+	padding-bottom:5px
+}
+
+label.error{display:block}
