@@ -284,11 +284,12 @@ a{
 .footer{
     background-color: $footer_bg;
     padding: 74px 0;
+    box-sizing: border-box;
     @include for-md(){
         padding: 70px 0;
     }
     @include for-md-mob(){
-        padding: 35px 0;
+        padding: 35px 15px;
     }
     &__row{
         display: flex;
@@ -688,7 +689,8 @@ a{
 .cookies{
     display: flex;
     align-items: center;
-    padding-right: 100px;
+    padding-right:40px;
+    justify-content: space-between;
     @include for-md(){
         flex-direction: column;
         padding-right: 0;
@@ -714,11 +716,12 @@ display: none;
 
 .button{
     margin-left: auto;
-    font-size: 24px;
-    line-height: 27px;
+    font-size: 18px;
+    line-height: 24px;
     display: inline-flex;
-    float: right;
-    margin-left: 50px;
+   margin-left: auto;
+    margin-left: 10px;
+    padding:18px 50px;
     flex-shrink: 0;
     @include for-sm(){
         padding: 10px;
@@ -752,10 +755,13 @@ position: relative;
 display: block;
 color: $black;
 font-weight: 400;
-font-size: 24px;
-line-height: 36px;
-padding-right: 50px;
+font-size: 18px;
+line-height: 24px;
+
 box-sizing: border-box;
+@include for-md(){
+    padding-right: 50px;
+}
 a {
 position: relative;
 display: inline-block;
