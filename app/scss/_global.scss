@@ -24,6 +24,10 @@ body{
     font-size: 18px;
     line-height: 28px;
     font-family: $Roboto;
+    @include for-md(){
+        font-size: 16px;
+        line-height: 24px;
+    }
     &.js-hidden{
         position: relative;
         overflow: hidden;
@@ -44,6 +48,9 @@ header{
     /* 1 flex-grow, 0 flex-shrink, auto flex-basis */
     flex: 1 0 auto;
     padding-bottom: 80px;
+    @include for-md(){
+        padding-bottom: 30px;
+    }
     // @include for-md{
     //     margin-top: 68px;
     // }

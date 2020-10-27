@@ -41,6 +41,7 @@ FURminator">
     <link rel="manifest" href="images/favs/manifest.json">
     <meta name="msapplication-TileImage" content="images/favs/ms-icon-144x144.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -214,7 +215,9 @@ FURminator">
                             Скан или фотография квитанции или чека, выданного при покупке
                         </p>
 
-                        <input type="file" class="form__input-file" id="check-file" name="check-file[]" multiple>
+                        <input type="file" class="form__input-file _req" id="check-file" name="check-file[]"
+                               accept="image/*"
+                               multiple >
                         <input type="hidden" name="MAX_FILE_SIZE" value="100000">
                     </div>
                     
@@ -228,7 +231,9 @@ FURminator">
                             Прикрепите, пожалуйста, качественные фотографии или видео Инструмента, снятые с разных ракурсов. На фотографиях должны хорошо просматриваться поломанные части Инструмента, серийный номер на лезвии, состояние зубчиков лезвия Инструмента.
                         </p>
 
-                        <input type="file" class="form__input-file" id="photo_file" name="photo_file" multiple>
+                        <input type="file" class="form__input-file _req" id="photo_file" name="photo_file[]"
+                               accept="image/*"
+                               multiple>
                     </div>
                     
                 </div>
@@ -316,7 +321,6 @@ FURminator">
                         </label>
                     </div>
                 </div>
-                <input name="recaptcha-token6" type="hidden">
                 <button class="button button--light-green form__button" type="submit">
                     <span>Отправить</span>
                 </button>
@@ -379,10 +383,9 @@ FURminator">
         </div>
     </div>
 
-
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdmhtsZAAAAAMaVaAJRnV4fYyLcHGDcMLTbLSgm"></script>
     <script src="js/libs.min.js"></script>
     <script src="//yandex.st/jquery/cookie/1.0/jquery.cookie.min.js"></script>
-    <!-- <script src="https://www.google.com/recaptcha/api.js?render=6LeU7b0ZAAAAAF7RV7hBwGyMmzxrvuhG9u9W6R8T"></script> -->
     <script src="js/main.js"></script>
     <script>
         

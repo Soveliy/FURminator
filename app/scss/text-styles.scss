@@ -107,7 +107,7 @@
       font-weight: 700;
       color: $grey;
       margin-top: 65px;
-      margin-bottom: 45px;
+      margin-bottom: 59px;
       text-align: center;
       a {
         font-weight: 500;
@@ -126,7 +126,7 @@
       font-family: $Source;
       color: #404745;
       margin-top: 70px;
-      margin-bottom: 30px;
+      margin-bottom: 50px;
       text-align: center;
       a {
         font-weight: 500;
@@ -274,21 +274,27 @@
       p {
         margin-bottom: 20px;
       }
+      .content_box_site ul, .content_box_site ol, .content_block ul, .content_block ol, .text_poll ul, .text_poll ol{
+        padding-left: 25px;
+      }
       ul, ol {
         margin-bottom: 20px;
         li {
-          margin-bottom: 12px;
+          margin-bottom: 6px;
+          &:before{
+            top: 8px;
+          }
         }
       }
       h1 {
-        font-size: 32px;
+        font-size: 30px;
         line-height: normal;
         margin-top: 50px;
-        margin-bottom: 25px;
+        margin-bottom: 50px;
         font-weight: 700;
       }
       h2 {
-        font-size: 27px;
+        font-size: 26px;
         line-height: normal;
         margin-top: 50px;
         margin-bottom: 25px;
@@ -351,7 +357,8 @@
         background-size: contain;
         margin: 26px auto;
         @media screen and (max-width: 600px){
-          margin: 13px auto;
+          margin: 20px auto;
+          height: 15px;
         }
       }
     }

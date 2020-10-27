@@ -1,10 +1,41 @@
 <?php
+	if (isset($_POST['captchaToken'])) {
+		$gRecaptchaResponse = $_POST['captchaToken'];
+		$secret = "6LdmhtsZAAAAAKe8zwCSdqS_nqgWouH74z7P_XPI";
+		$recaptcha = new \ReCaptcha\ReCaptcha($secret);
+		$resp = $recaptcha->setExpectedHostname('clients2.evgenykras.ru/FUR/')
+			->verify($gRecaptchaResponse/*, $remoteIp*/);
+		if ($resp->isSuccess()) {
+			$captcha = true;
+		} else {
+			$errors = $resp->getErrorCodes();
+			$captcha = false;
+		}
+	} else {
+		$captcha = false;
+	}
+	if ( !$captcha )
+	{
+		$response = ['message' => 'Captcha error'];
+
+		header('Content-type: application/json');
+		echo json_encode($response);
+		die();
+	}
+
+
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\Exception;
 	use PHPMailer\PHPMailer\SMTP;
+
+	/*imagine*/
+	use Imagine\Image\Box;
+	use Imagine\Image\Point;
+
 	require 'phpmailer/src/Exception.php';
 	require 'phpmailer/src/PHPMailer.php';
 	require __DIR__ . '/vendor/PHPMailer/SMTP.php';
+	require 'lib/vendor/autoload.php';
 
 	$mail = new PHPMailer(true);
 	$mail->CharSet = 'UTF-8';
@@ -12,7 +43,7 @@
 	$mail->IsHTML(true);
 	$mail->Host       = 'smtp.yandex.ru'; // SMTP сервера вашей почты
     $mail->Username   = 'nikita.elagin2012@yandex.ru'; // Логин на почте
-    $mail->Password   = 'pass'; // Пароль на почте
+    $mail->Password   = '15121997lisaann'; // Пароль на почте
     $mail->SMTPSecure = 'ssl';
     $mail->Port       = 465;
 
@@ -22,10 +53,6 @@
 	$mail->addAddress('nikita.elagin2012@yandex.ru');
 	//Тема письма
 	$mail->Subject = 'furminator.info: Заявка на замену инструмента';
-
-
-
-	
 
 	$body = '<p>Поступила Заявка на замену инструмента с сайта furminator.info. <br>';
 	
@@ -163,30 +190,72 @@
 // for($ct=0;$ct<count($_FILES['check-file']['tmp_name']);$ct++){
 //     $mail->AddAttachment($_FILES['check-file']['tmp_name'][$ct],$_FILES['check-file']['name'][$ct]);
 // }
+	function ProcessImageFiles($filesArray, $file_name_suffix='', $img_result_ext='png', $minSize = 2000){
+		$result = false;
+		try {
+			if (!empty($filesArray['name'][0])) {
+				$i = 0;
+				foreach ($filesArray['name'] as $key => $value) {
+					if ( empty($filesArray['tmp_name'][$key]))
+					{
+						continue; // сообщение об ошибке?
+					}
+					$imagine = new Imagine\Gd\Imagine();
+					$image = $imagine->open($filesArray['tmp_name'][$key]);
+					if ( $image ){//если не можем открыть? что делаем? (сообщение?)
+						$size      = $image->getSize();
+						if ( $size->getWidth() > $minSize && $size->getHeight() > $minSize ){
+							if ( $size->getWidth() < $size->getHeight() ){
+								$boxHeight = $minSize*$size->getHeight()/$size->getWidth();
+								$boxWidth = $minSize;
+							} else {
+								$boxHeight = $minSize;
+								$boxWidth = $minSize*$size->getWidth()/$size->getHeight();
+							}
+							$image->resize(new Box($boxWidth, $boxHeight));
+						}
+						$fileExists = true;
+						//пока делаем небольшой костыль, чтобы не перезаписывать файлы
+						//Оставлять это нельзя, тк при увеличении кол-ва файлов, будет возрастать кол-во обращений к диску
+						while ( $fileExists ){
+							$i++;
+							$fileName = __DIR__.'/warrantyfiles/'.date('Ymd').$file_name_suffix.'-'.$i.'.'.$img_result_ext;
+							$fileExists = file_exists($fileName);
+						}
+						$image->save($fileName);
+						unlink($filesArray['tmp_name'][$key]);
+						$result[] = array("name" => $filesArray['name'][$key], "tmp_name" => $fileName);
+					}
 
-		if (!empty($_FILES['check-file']['name'][0])) {
-			foreach ($_FILES['check-file']['name'] as $key => $value) {
-				$out_files[] = array("name"=>$_FILES['check-file']['name'][$key], "tmp_name" => $_FILES['check-file']['tmp_name'][$key]);
+				}
 			}
-			$filesSend = true;
-		} else {
-			$filesSend = false;    
+		} catch (Exception $e) {
+			$result = false;
 		}
-		if ($filesSend) {
-			foreach ($out_files as $k=>$v) {
-				$mail->AddAttachment($out_files[$k]['tmp_name'], $out_files[$k]['name']);
-			}
+		return $result;
+	}
+	$out_files = ProcessImageFiles($_FILES['check-file'],'_check_file');
+
+	if ($out_files) {
+		foreach ($out_files as $k=>$v) {
+			$mail->AddAttachment($out_files[$k]['tmp_name'], $out_files[$k]['name']);
 		}
+	}
+	$out_files = ProcessImageFiles($_FILES['photo_file'],'_photo_file');
+
+	if ($out_files) {
+		foreach ($out_files as $k=>$v) {
+			$mail->AddAttachment($out_files[$k]['tmp_name'], $out_files[$k]['name']);
+		}
+	}
 	$mail->Body = $body;
-	
 
-	//Отправляем
+//Отправляем
 	if (!$mail->send()) {
 		$message = 'Ошибка';
 	} else {
 		$message = 'Данные отправлены!';
 	}
-
 
 	$email2 = $_POST['email'];
 	$mail2 = new PHPMailer(true);
@@ -205,12 +274,12 @@
 	$body2 = '<p>Спасибо, ваша Заявка на замену инструмента FURminator получена.
 	В ближайшее время с вами свяжутся наши специалисты.</p>';
 	$mail2->Body = $body2;
+
 	if (!$mail2->send()) {
 		$message = 'Ошибка';
 	} else {
 		$message = 'Данные отправлены!';
 	}
-
 	$response = ['message' => $message];
 
 	header('Content-type: application/json');

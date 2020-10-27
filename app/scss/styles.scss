@@ -12,6 +12,10 @@ a{
 .logo{
     width: 236px;
     height: 54px;
+    transition: .3s;
+    &:hover{
+        transform: scale(1.05);
+    }
     @include for-md(){
         width: 200px;
     }
@@ -85,8 +89,8 @@ a{
             font-weight: 700;
         }
         @include for-md-mob(){
-            font-size: 16px;
-            line-height: 20px;
+            font-size: 24px;
+            line-height: 30px;
         }
         &--button{
             @include for-md(){
@@ -104,8 +108,8 @@ a{
                 color: $white;
                 @include for-md-mob(){
                     padding: 11px 25px;
-                    font-size: 16px;
-                    line-height: 20px;
+                    font-size: 24px;
+                    line-height: 30px;
                 }
                 &:before{
                     position: absolute;
@@ -145,7 +149,7 @@ a{
     position: relative;
     z-index: 1000;
     background-color: $black;
-    padding: 9px 0 17px;
+    padding:13px 0;
     @include for-md(){
         padding: 23px 0;
     }
@@ -224,8 +228,8 @@ a{
             margin: 0 0 22px 0;
         }
         @include for-md-mob(){
-            font-size: 32px;
-            line-height: 35px;
+            font-size: 30px;
+            line-height: 34px;
             margin: 0 0 11px 0;
         }
     }
@@ -243,7 +247,7 @@ a{
             margin: 0 auto;
         }
         @include for-md-mob(){
-            max-width: 50%;
+            max-width:40%;
         }
     }
     &__button{
@@ -279,12 +283,12 @@ a{
 }
 .footer{
     background-color: $footer_bg;
-    padding: 73px 0 75px;
+    padding: 74px 0;
     @include for-md(){
-        padding: 70px 0 64px;
+        padding: 70px 0;
     }
     @include for-md-mob(){
-        padding: 35px;
+        padding: 35px 0;
     }
     &__row{
         display: flex;
@@ -298,16 +302,20 @@ a{
         width: 100%;
     }
     &__menu-list{
+        margin: 0 -10px;
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
         @include for-sm(){
             flex-direction: column;
             align-items: center;
+            margin: 0;
         }
         &-item{
+            margin: 5px 10px;
             &+&{
                 @include for-sm(){
-                    margin-top: 10px;
+                    margin: 10px 0 0 0;
                 }
             }
         }
@@ -335,7 +343,7 @@ a{
     }
     a.footer__link{
         &:hover{
-            color: rgba($light_green, .8);
+            opacity: .8;
         }
     }
 }
@@ -351,10 +359,9 @@ a{
     }
     &__link{
         display: block;
-        width: 32px;
-        height: 32px;
+        width: 31px;
+        height: 31px;
         border-radius: 50%;
-        background-size: contain;
         background-repeat: no-repeat;
         background-position: center center;
         transition: .3s;
@@ -366,9 +373,15 @@ a{
 .replacement{
     &--main{
         padding-top: 82px;
+        @include for-md(){
+            padding-top: 40px;
+        }
     }
     &__list{
-        margin-top: 52px;
+        margin-top: 50px;
+        @include for-md(){
+            margin-top: 40px;
+        }
     }
     &__title{
         font-size: 44px;
@@ -377,11 +390,11 @@ a{
         font-family: "Source Sans Pro", sans-serif;
         color: #404745;
        
-        margin-bottom: 30px;
+        margin-bottom: 50px;
         text-align: center;
         text-transform: uppercase;
         @media screen and (max-width: 600px){
-            font-size: 27px;
+            font-size: 26px;
             line-height: normal;
             margin-bottom: 25px;
         }
@@ -417,9 +430,12 @@ a{
                     margin: 20px 0 35px;
                 }
                 @include for-tiny-tablet(){
-                    font-size: 27px;
-                    line-height: 30px;
-                    margin: 15px 0 35px;
+                    font-size: 20px;
+                    line-height:24px;
+                    margin: 0 0 20px;
+                    min-height: 55px;
+                    display: flex;
+                    align-items: center;
                 }
             }
             p{
@@ -431,6 +447,8 @@ a{
                 }
                 @include for-tiny-tablet(){
                     margin-left: -70px;
+                    font-size: 16px;
+                    line-height: 24px;
                 }
             }
            
@@ -440,7 +458,10 @@ a{
         }
     }
     &__button-container{
-        margin-top: 56px;
+        margin-top: 50px;
+        @include for-md(){
+            margin-top: 40px;
+        }
     }
 }
 .breadcrumbs{
@@ -474,8 +495,14 @@ a{
 }
 .form{
     padding-top: 80px;
-    p{
+    @include for-md(){
+        padding-top: 40px;
+    }
+    h2 + p{
         margin-bottom: 40px;
+        @include for-md(){
+            margin-bottom: 20px;
+        }
     }
     &__input-label{
         font-size: 18px;
@@ -494,6 +521,10 @@ a{
         margin-top: 10px;
         box-shadow: none;
         transition: .3s;
+        @include for-sm(){
+            height: 40px;
+            margin-top: 5px;
+        }
         &-required{
             color: #ff0000;
         }
@@ -510,6 +541,14 @@ a{
         width: 100%;
         cursor: pointer;
         transition: .3s;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background: url(../img/select-icon.png) no-repeat;
+        background-position: right .7em top 55%, 0 0;
+        @include for-sm(){
+            height: 40px;
+        }
         &:focus{
             border-color: #999999;
         }
@@ -548,22 +587,41 @@ a{
     &__input-container{
         display: flex;
         width: 100%;
+        @include for-sm(){
+            flex-direction: column;
+        }
         &+&{
             margin-top: 32px;
+            @include for-sm(){
+                margin-top: 20px;
+            }
         }
     }
     &__input-block{
         width: 100%;
         &+&{
             margin-left: 25px;
+            @include for-sm(){
+                margin-left: 0;
+                margin-top: 20px;
+            }
         }
     }
     &__button{
         outline: none;
         border: none;
+        @include for-sm(){
+            display: block;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
     }
     &__checkboxes{
-        margin-top: 32px;
+        margin-top: 35px;
+        @include for-md(){
+            margin-top: 25px;
+        }
     }
     &__checkbox{
         position: relative;
@@ -591,17 +649,28 @@ a{
     &__checkbox-container{
         &+&{
             margin-top: 30px;
+            @include for-md(){
+                margin-top: 15px;
+            }
         }
     }
     &__button{
         margin-top: 40px;
+        @include for-md(){
+            margin-top: 20px;
+        }
     }
     &__subtitle{
         font-size: 28px;
         line-height: 31px;
         font-weight: 700;
-        margin: 60px 0 20px;
+        margin: 60px 0 35px;
         color: $grey;
+        @include for-sm(){
+            font-size: 23px;
+            line-height: 27px;
+            margin: 40px 0;
+        }
     }
 }
 
@@ -616,6 +685,15 @@ a{
 }
 
 //fixed_cookies_block
+.cookies{
+    display: flex;
+    align-items: center;
+    padding-right: 100px;
+    @include for-md(){
+        flex-direction: column;
+        padding-right: 0;
+    }
+}
 .fixed_cookies_block {
     position: fixed;
     z-index: 9500;
@@ -641,11 +719,14 @@ display: none;
     line-height: 27px;
     display: inline-flex;
     float: right;
+    margin-left: 50px;
+    flex-shrink: 0;
     @include for-sm(){
         padding: 10px;
         font-size: 15px;
         line-height: 20px;
         margin-top: 10px;
+        margin-left: 0;
     }
 }
 .close_cookies--icon{
@@ -657,10 +738,12 @@ display: none;
     background: url(../images/close.png) no-repeat center center;
     background-size: contain;
     transition: .3s;
+    
     &:hover{
         transform: rotate(90deg);
     }
     @include for-sm(){
+
         top: 15px;
         right: 15px;
     }
@@ -681,6 +764,9 @@ font-weight: 400;
 border-bottom: 1px solid rgba(255,255,255,0.3);
 transition:all 0.3s ease-out;
 text-decoration: underline;
+&:hover{
+    text-decoration-color: rgba(255,255,255,0);
+}
 &:hover {
     border-bottom: 1px solid rgba(255,255,255,0);
     }
@@ -778,8 +864,13 @@ img {
             background: url(../images/close.png) no-repeat center center;
             background-size: contain;
             transition: .3s;
+            cursor: pointer;
             &:hover{
                 transform: rotate(90deg);
             }
         }
+    }
+
+    .grecaptcha-badge{
+        display: none;
     }
